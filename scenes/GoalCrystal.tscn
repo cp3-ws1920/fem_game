@@ -1,0 +1,74 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://assets/cristall_break12.png" type="Texture" id=1]
+[ext_resource path="res://assets/cristall_break2.png" type="Texture" id=2]
+[ext_resource path="res://assets/cristall_break4.png" type="Texture" id=3]
+[ext_resource path="res://assets/cristall_break1.png" type="Texture" id=4]
+[ext_resource path="res://assets/cristall_break3.png" type="Texture" id=5]
+[ext_resource path="res://assets/cristall_break6.png" type="Texture" id=6]
+[ext_resource path="res://assets/cristall_break8.png" type="Texture" id=7]
+[ext_resource path="res://assets/cristall_break7.png" type="Texture" id=8]
+[ext_resource path="res://assets/cristall_break10.png" type="Texture" id=9]
+[ext_resource path="res://assets/cristall_break9.png" type="Texture" id=10]
+[ext_resource path="res://assets/cristall_break5.png" type="Texture" id=11]
+[ext_resource path="res://assets/cristall_break11.png" type="Texture" id=12]
+[ext_resource path="res://assets/cristall2.png" type="Texture" id=13]
+[ext_resource path="res://assets/cristall3.png" type="Texture" id=14]
+[ext_resource path="res://assets/cristall5.png" type="Texture" id=15]
+[ext_resource path="res://assets/cristall7.png" type="Texture" id=16]
+[ext_resource path="res://assets/cristall6.png" type="Texture" id=17]
+[ext_resource path="res://assets/cristall8.png" type="Texture" id=18]
+[ext_resource path="res://assets/cristall4.png" type="Texture" id=19]
+[ext_resource path="res://assets/cristall1.png" type="Texture" id=20]
+[ext_resource path="res://scripts/GoalCrystal.gd" type="Script" id=21]
+[ext_resource path="res://assets/cristall_break13.png" type="Texture" id=22]
+[ext_resource path="res://audio/break.wav" type="AudioStream" id=23]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+void fragment() {
+	COLOR = texture(TEXTURE, UV);
+	if (COLOR == vec4(1.0f, 1.0f, 1.0f, 1.0f)) {
+		COLOR.rgb *= 2.5f;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 2 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 11 ), ExtResource( 6 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 12 ), ExtResource( 1 ), ExtResource( 22 ) ],
+"loop": false,
+"name": "break",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 20 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 19 ), ExtResource( 15 ), ExtResource( 17 ), ExtResource( 16 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 8.92471
+
+[node name="GoalCrystal" type="Node2D"]
+script = ExtResource( 21 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+material = SubResource( 2 )
+frames = SubResource( 3 )
+frame = 6
+playing = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 0, -1 )
+shape = SubResource( 4 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 23 )

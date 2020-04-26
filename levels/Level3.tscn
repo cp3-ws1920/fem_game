@@ -1,0 +1,308 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://assets/border.png" type="Texture" id=1]
+[ext_resource path="res://assets/slingshot_bg6.png" type="Texture" id=2]
+[ext_resource path="res://assets/slingshot_bg5.png" type="Texture" id=3]
+[ext_resource path="res://assets/slingshot_bg4.png" type="Texture" id=4]
+[ext_resource path="res://assets/slingshot_bg3.png" type="Texture" id=5]
+[ext_resource path="res://assets/slingshot_bg1.png" type="Texture" id=6]
+[ext_resource path="res://assets/slingshot_bg2.png" type="Texture" id=7]
+[ext_resource path="res://environments/main_environment.tres" type="Environment" id=8]
+[ext_resource path="res://scenes/Ball.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/GoalCrystal.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/Obstacle.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/Camera2D.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scripts/Level3.gd" type="Script" id=13]
+[ext_resource path="res://scripts/Slingshot.gd" type="Script" id=14]
+[ext_resource path="res://shaders/Slingshot.shader" type="Shader" id=15]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 15 )
+
+[sub_resource type="AnimatedTexture" id=2]
+flags = 2
+frames = 6
+fps = 10.0
+frame_0/texture = ExtResource( 6 )
+frame_1/texture = ExtResource( 7 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 5 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 4 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 3 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 2 )
+frame_5/delay_sec = 0.0
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 4.78286, 2.40703 )
+
+[node name="Level3" type="Node2D"]
+script = ExtResource( 13 )
+goal_path = NodePath("GoalCrystal")
+
+[node name="Ball" parent="." instance=ExtResource( 9 )]
+position = Vector2( 267.845, 244.126 )
+
+[node name="GoalCrystal" parent="." instance=ExtResource( 10 )]
+position = Vector2( 304.192, 82.8237 )
+camera_path = NodePath("../../Level3/Camera2D")
+
+[node name="Camera2D" parent="." instance=ExtResource( 12 )]
+position = Vector2( 319.105, 159.499 )
+
+[node name="Slingshot" type="StaticBody2D" parent="."]
+position = Vector2( 265.581, 254.23 )
+collision_layer = 3
+script = ExtResource( 14 )
+grab_force = 500.0
+
+[node name="PolygonDisplay" type="Polygon2D" parent="Slingshot"]
+material = SubResource( 1 )
+position = Vector2( -0.157791, -1.19209e-07 )
+color = Color( 0.611765, 0.858824, 0.262745, 1 )
+texture = SubResource( 2 )
+
+[node name="Polygon2D" type="CollisionPolygon2D" parent="Slingshot"]
+polygon = PoolVector2Array( -20, 0, -20, 10, -10, 10, 0, 10, 10, 10, 20, 10, 20, 0, 10, 0, 0, 0, -10, 0 )
+
+[node name="ElasticBody2D" type="ElasticBody2D" parent="Slingshot/Polygon2D"]
+position = Vector2( 1.84415, 0 )
+young_modulus = 40000.0
+method = 5
+fixed_delta = true
+
+[node name="Area2D" type="Area2D" parent="Slingshot/Polygon2D/ElasticBody2D"]
+position = Vector2( -20.759, 5.22676 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slingshot/Polygon2D/ElasticBody2D/Area2D"]
+scale = Vector2( 1, 3.28 )
+shape = SubResource( 3 )
+
+[node name="Line2D" type="Line2D" parent="Slingshot"]
+position = Vector2( -0.157776, 0 )
+points = PoolVector2Array( 0, 0, 10, 0 )
+width = 2.0
+default_color = Color( 1, 1, 1, 1 )
+texture = ExtResource( 1 )
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Slingshot6" type="StaticBody2D" parent="."]
+position = Vector2( 279.479, 274.612 )
+collision_layer = 3
+script = ExtResource( 14 )
+grab_force = 500.0
+max_force = 200000.0
+
+[node name="PolygonDisplay" type="Polygon2D" parent="Slingshot6"]
+material = SubResource( 1 )
+position = Vector2( -0.157791, -1.19209e-07 )
+color = Color( 0.611765, 0.858824, 0.262745, 1 )
+texture = SubResource( 2 )
+
+[node name="Polygon2D" type="CollisionPolygon2D" parent="Slingshot6"]
+position = Vector2( -0.115677, -0.115692 )
+polygon = PoolVector2Array( -30.6927, -0.12677, -30, 10, -20.8036, 11.2273, -9.81573, 10.4948, -0.292892, 10.6169, 10, 10, 19.119, 11.7157, 29.4965, 12.0819, 39.2635, 12.6924, 49.2746, 12.0819, 59.7742, 10.9832, 70, 10, 70, 0, 60.1404, -0.00473022, 51.228, -1.71393, 40, 0, 31.0836, -1.46973, 20, 0, 10, 0, 3.49181, -0.615173, 0, 0, -11.647, -1.22559, -21.414, -2.56854 )
+
+[node name="ElasticBody2D" type="ElasticBody2D" parent="Slingshot6/Polygon2D"]
+young_modulus = 40000.0
+method = 5
+fixed_delta = true
+
+[node name="Area2D" type="Area2D" parent="Slingshot6/Polygon2D/ElasticBody2D"]
+position = Vector2( -31.3303, 4.91121 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slingshot6/Polygon2D/ElasticBody2D/Area2D"]
+scale = Vector2( 1, 3.28 )
+shape = SubResource( 3 )
+
+[node name="Area2D2" type="Area2D" parent="Slingshot6/Polygon2D/ElasticBody2D"]
+position = Vector2( 68.7663, 4.33825 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slingshot6/Polygon2D/ElasticBody2D/Area2D2"]
+scale = Vector2( 1, 3.28 )
+shape = SubResource( 3 )
+
+[node name="Line2D" type="Line2D" parent="Slingshot6"]
+position = Vector2( -0.157776, 0 )
+points = PoolVector2Array( 0, 0, 10, 0 )
+width = 2.0
+default_color = Color( 1, 1, 1, 1 )
+texture = ExtResource( 1 )
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Slingshot3" type="StaticBody2D" parent="."]
+position = Vector2( 265.939, 195.438 )
+collision_layer = 3
+script = ExtResource( 14 )
+grab_force = 500.0
+
+[node name="PolygonDisplay" type="Polygon2D" parent="Slingshot3"]
+material = SubResource( 1 )
+position = Vector2( -0.157791, -1.19209e-07 )
+color = Color( 0.611765, 0.858824, 0.262745, 1 )
+texture = SubResource( 2 )
+
+[node name="Polygon2D" type="CollisionPolygon2D" parent="Slingshot3"]
+polygon = PoolVector2Array( -20, 0, -20, 10, -10, 10, 0, 10, 10, 10, 20, 10, 20, 0, 10, 0, 0, 0, -10, 0 )
+
+[node name="ElasticBody2D" type="ElasticBody2D" parent="Slingshot3/Polygon2D"]
+position = Vector2( 1.84415, 0 )
+young_modulus = 40000.0
+method = 5
+fixed_delta = true
+
+[node name="Area2D" type="Area2D" parent="Slingshot3/Polygon2D/ElasticBody2D"]
+position = Vector2( -20.759, 5.22676 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slingshot3/Polygon2D/ElasticBody2D/Area2D"]
+scale = Vector2( 1, 3.28 )
+shape = SubResource( 3 )
+
+[node name="Line2D" type="Line2D" parent="Slingshot3"]
+position = Vector2( -0.157776, 0 )
+points = PoolVector2Array( 0, 0, 10, 0 )
+width = 2.0
+default_color = Color( 1, 1, 1, 1 )
+texture = ExtResource( 1 )
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Slingshot5" type="StaticBody2D" parent="."]
+position = Vector2( 264.147, 133.061 )
+collision_layer = 3
+script = ExtResource( 14 )
+grab_force = 500.0
+
+[node name="PolygonDisplay" type="Polygon2D" parent="Slingshot5"]
+material = SubResource( 1 )
+position = Vector2( -0.157791, -1.19209e-07 )
+color = Color( 0.611765, 0.858824, 0.262745, 1 )
+texture = SubResource( 2 )
+
+[node name="Polygon2D" type="CollisionPolygon2D" parent="Slingshot5"]
+polygon = PoolVector2Array( -20, 0, -20, 10, -10, 10, 0, 10, 10, 10, 20, 10, 20, 0, 10, 0, 0, 0, -10, 0 )
+
+[node name="ElasticBody2D" type="ElasticBody2D" parent="Slingshot5/Polygon2D"]
+position = Vector2( 1.84415, 0 )
+young_modulus = 40000.0
+method = 5
+fixed_delta = true
+
+[node name="Area2D" type="Area2D" parent="Slingshot5/Polygon2D/ElasticBody2D"]
+position = Vector2( -20.759, 5.22676 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slingshot5/Polygon2D/ElasticBody2D/Area2D"]
+scale = Vector2( 1, 3.28 )
+shape = SubResource( 3 )
+
+[node name="Line2D" type="Line2D" parent="Slingshot5"]
+position = Vector2( -0.157776, 0 )
+points = PoolVector2Array( 0, 0, 10, 0 )
+width = 2.0
+default_color = Color( 1, 1, 1, 1 )
+texture = ExtResource( 1 )
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Slingshot2" type="StaticBody2D" parent="."]
+position = Vector2( 329.831, 227.234 )
+collision_layer = 3
+script = ExtResource( 14 )
+grab_force = 500.0
+
+[node name="PolygonDisplay" type="Polygon2D" parent="Slingshot2"]
+material = SubResource( 1 )
+position = Vector2( -0.157791, -1.19209e-07 )
+color = Color( 0.611765, 0.858824, 0.262745, 1 )
+texture = SubResource( 2 )
+
+[node name="Polygon2D" type="CollisionPolygon2D" parent="Slingshot2"]
+polygon = PoolVector2Array( -20, 0, -20, 10, -10, 10, 0, 10, 10, 10, 20, 10, 20, 0, 10, 0, 0, 0, -10, 0 )
+
+[node name="ElasticBody2D" type="ElasticBody2D" parent="Slingshot2/Polygon2D"]
+young_modulus = 40000.0
+method = 5
+fixed_delta = true
+
+[node name="Area2D" type="Area2D" parent="Slingshot2/Polygon2D/ElasticBody2D"]
+position = Vector2( 22.5141, 5.78154 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slingshot2/Polygon2D/ElasticBody2D/Area2D"]
+scale = Vector2( 1, 3.28 )
+shape = SubResource( 3 )
+
+[node name="Line2D" type="Line2D" parent="Slingshot2"]
+position = Vector2( -0.157776, 0 )
+points = PoolVector2Array( 0, 0, 10, 0 )
+width = 2.0
+default_color = Color( 1, 1, 1, 1 )
+texture = ExtResource( 1 )
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Slingshot4" type="StaticBody2D" parent="."]
+position = Vector2( 329.831, 164.498 )
+collision_layer = 3
+script = ExtResource( 14 )
+grab_force = 500.0
+
+[node name="PolygonDisplay" type="Polygon2D" parent="Slingshot4"]
+material = SubResource( 1 )
+position = Vector2( -0.157791, -1.19209e-07 )
+color = Color( 0.611765, 0.858824, 0.262745, 1 )
+texture = SubResource( 2 )
+
+[node name="Polygon2D" type="CollisionPolygon2D" parent="Slingshot4"]
+polygon = PoolVector2Array( -20, 0, -20, 10, -10, 10, 0, 10, 10, 10, 20, 10, 20, 0, 10, 0, 0, 0, -10, 0 )
+
+[node name="ElasticBody2D" type="ElasticBody2D" parent="Slingshot4/Polygon2D"]
+young_modulus = 40000.0
+method = 5
+fixed_delta = true
+
+[node name="Area2D" type="Area2D" parent="Slingshot4/Polygon2D/ElasticBody2D"]
+position = Vector2( 22.5141, 5.78154 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slingshot4/Polygon2D/ElasticBody2D/Area2D"]
+scale = Vector2( 1, 3.28 )
+shape = SubResource( 3 )
+
+[node name="Line2D" type="Line2D" parent="Slingshot4"]
+position = Vector2( -0.157776, 0 )
+points = PoolVector2Array( 0, 0, 10, 0 )
+width = 2.0
+default_color = Color( 1, 1, 1, 1 )
+texture = ExtResource( 1 )
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Obstacle" parent="." instance=ExtResource( 11 )]
+position = Vector2( 310.886, 331.281 )
+scale = Vector2( 33.4015, 0.519998 )
+
+[node name="Obstacle2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 245.624, 42.5732 )
+scale = Vector2( 0.601461, 30.4 )
+
+[node name="Obstacle3" parent="." instance=ExtResource( 11 )]
+position = Vector2( 354.773, 0.191208 )
+scale = Vector2( 0.601461, 33.96 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 8 )
