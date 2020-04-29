@@ -4,6 +4,6 @@ A very simple game I made in Godot to demonstrate the capabilities of [ElasticBo
 
 The aim is to break the crystal with the small sphere by using the elastic slingshots. Drag the slingshots with the mouse.
 
-Binaries can be found at the [releases page](https://github.com/john-wigg/fem_game/releases).
+Binaries can be found at the [releases page](https://github.com/cp-ws1920/fem_game/releases).
 
-![](https://github.com/john-wigg/fem_game/blob/master/preview.png?raw=true)
+![](https://github.com/cp-ws1920/fem_game/blob/master/preview.png?raw=true)
