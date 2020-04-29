@@ -6,4 +6,4 @@ The aim is to break the crystal with the small sphere by using the elastic sling
 
 Binaries can be found at the [releases page](https://github.com/cp3-ws1920/fem_game/releases).
 
-![](https://github.com/cp-ws1920/fem_game/blob/master/preview.png?raw=true)
+![](https://github.com/cp3-ws1920/fem_game/blob/master/preview.png?raw=true)
